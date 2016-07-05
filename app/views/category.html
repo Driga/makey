@@ -1,0 +1,46 @@
+<div class="jumbotron" ng-init="sortorder= 'product_name'; reverse = false">
+  <div class="well well-sm mywell" ng-init="cat = 0">
+    <div class="btn-group">
+      <div class="dropdown gategories-dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Категория
+          <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1"  >
+          <li  role="presentation" ng-repeat="Category in Categories" ><a  ui-sref="category({catId: {{Category.virtuemart_category_id}}})" role="menuitem" tabindex="-1" >{{Category.category_name}}</a></li>
+        </ul>
+      </div>
+      <a id="grid" class="btn btn-default btn-sm" ng-click="sortorder = 'product_name';  reverseFn()">
+        <span class="glyphicon glyphicon-arrow-up"></span>
+        По имени
+      </a>
+      <a id="list" class="btn btn-default btn-sm"  ng-click="sortorder = 'product_price'; reverseFn()">
+        <span class="glyphicon glyphicon-arrow-up"></span>
+        По цене
+      </a>
+    </div>
+  </div>
+  <pagination
+          ng-model="currentPage"
+          total-items="Products.length"
+          max-size="maxSize"
+          boundary-links="true">
+  </pagination>
+  <div class="container">
+    <div class="item  col-xs-12 col-sm-4 myitem" ng-repeat="Product in filteredProducts | orderBy:sortorder:reverse | limitTo:9 ">
+      <div class="thumbnail">
+        <img class="group " ng-src="{{Product.images['0'].file_url}}" alt="" />
+        <div class="caption">
+          <h4 class="group inner">{{Product.product_name | limitTo:25}}...</h4>
+          <p class="group inner"></p>
+          <div class="row">
+            <div class="col-xs-12 col-md-6 price">
+              <p class="lead">Цена  - {{Product.product_price}} Lei</p>
+            </div>
+            <div class="col-xs-12 col-md-6 addbtn">
+              <a class="btn " href="">Купить</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
